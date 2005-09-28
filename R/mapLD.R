@@ -233,7 +233,7 @@ function(SNPdata, locusID.col, subjectID.col, allele.cols,
       x[k, k] <- 1
     }
 
-    plotData <- expand.grid(x = loci, y = loci)
+    plotData <- expand.grid(x = 1:length(loci), y = 1:length(loci))
     plotData$dprime <- as.vector(x)
     
     newBlock <- t(apply(BlockData, 1, function(loci, row.i){
@@ -252,8 +252,8 @@ function(SNPdata, locusID.col, subjectID.col, allele.cols,
     trellis.par.set('background', newBg)
 
     mainGraph <- levelplot(dprime ~ x * y, data = plotData,
-                           scales = list(x = list(labels = paste(loci)),
-                             y = list(labels = paste(loci))),
+                           scales = list(x = list(labels = paste(loci), at = 1:length(loci)),
+                             y = list(labels = paste(loci), at = 1:length(loci))),
                            pretty = TRUE, xlab = 'Locus #', ylab = 'Locus #',
                            main = paste('LD Heatmap', ifelse(is.na(gene), '',
                              paste('in Gene', gene))),
@@ -262,8 +262,8 @@ function(SNPdata, locusID.col, subjectID.col, allele.cols,
     print(mainGraph, more = TRUE, split = rep(1, 4))
   
     additional <- levelplot(dprime ~ x * y, data = plotData,
-                            scales = list(x = list(labels = paste(loci)),
-                              y = list(labels = paste(loci))),
+                            scales = list(x = list(labels = paste(loci), at = 1:length(loci)),
+                              y = list(labels = paste(loci), at = 1:length(loci))),
                             pretty = TRUE, xlab = 'Locus #', ylab = 'Locus #',
                             main = paste('LD Heatmap', ifelse(is.na(gene), '',
                               paste('in Gene', gene))),
